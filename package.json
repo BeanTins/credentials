@@ -2,10 +2,11 @@
   "name": "credentials",
   "version": "0.1.0",
   "bin": {
-    "credentials": "bin/credentials.js"
+    "credentials": "dist/provisioning/member-credentials-prod.js"
   },
   "scripts": {
     "build": "tsc",
+    "prepare": "npm run build",
     "watch": "tsc -w",
     "test": "jest",
     "cdk": "cdk",
