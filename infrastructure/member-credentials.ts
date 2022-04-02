@@ -33,7 +33,7 @@ export class MemberCredentials extends Stack {
   }
 
   private buildUserPool(id: string, stageName: string, storeType: StoreType) {
-    const userPool = new UserPool(this, 'MemberCredentials', {
+    const userPool = new UserPool(this, "MemberCredentials" + stageName, {
       selfSignUpEnabled: true,
       // signInAliases: {
       //   email: true,
