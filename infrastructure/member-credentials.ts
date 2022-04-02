@@ -2,9 +2,9 @@ import {UserPool,
   AccountRecovery, 
   UserPoolClient, 
   UserPoolClientIdentityProvider, 
-  ClientAttributes} from "@aws-cdk/aws-cognito"
-import {Stack, App, StackProps, RemovalPolicy, CfnOutput} from "@aws-cdk/core"
-import {StringParameter, ParameterType, ParameterTier} from "@aws-cdk/aws-ssm"
+  ClientAttributes} from "aws-cdk-lib/aws-cognito"
+import {Stack, App, StackProps, RemovalPolicy, CfnOutput} from "aws-cdk-lib"
+import {StringParameter, ParameterType, ParameterTier} from "aws-cdk-lib/aws-ssm"
 
 export enum StoreType
 {

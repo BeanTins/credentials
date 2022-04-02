@@ -1,6 +1,6 @@
 
 import "source-map-support/register"
-import {App} from "@aws-cdk/core"
+import {App} from "aws-cdk-lib"
 import { MemberCredentials, StoreType } from "../infrastructure/member-credentials"
 
 const app = new App()
