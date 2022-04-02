@@ -34,7 +34,6 @@ export class MemberCredentials extends Stack {
 
   private buildUserPool(id: string, stageName: string, storeType: StoreType) {
     const userPool = new UserPool(this, 'MemberCredentials', {
-      userPoolName: id,
       selfSignUpEnabled: true,
       // signInAliases: {
       //   email: true,
