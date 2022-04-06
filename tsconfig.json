@@ -9,6 +9,8 @@
     "outDir": "dist",
     "allowJs": true,
     "skipLibCheck": true,
+    "declarationMap": true,
+    "composite": true,
     "declaration": true,
     "strict": true,
     "noImplicitAny": true,
