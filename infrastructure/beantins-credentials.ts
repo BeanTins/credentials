@@ -136,6 +136,7 @@ export class BeanTinsCredentials extends Stack {
         adminUserPassword: true,
         custom: true,
         userSrp: true,
+        userPassword: true
       },
       oAuth: {
         scopes: [ OAuthScope.resourceServer(this.userServer, scope) ],
