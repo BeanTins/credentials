@@ -15,7 +15,7 @@ export enum StoreType
   Parameter
 }
 interface BeanTinsCredentialsProps extends StackProps {
-  stageName: string
+  deploymentName: string
   storeTypeForSettings: StoreType
 }
 
@@ -29,7 +29,7 @@ export class BeanTinsCredentials extends Stack {
   constructor(scope: App, id: string, props: BeanTinsCredentialsProps) {
     super(scope, id, props)
 
-    const userPool = this.buildUserPool(id, props.stageName, props.storeTypeForSettings)
+    const userPool = this.buildUserPool(id, props.deploymentName, props.storeTypeForSettings)
     this.userPoolId = userPool.userPoolId
     this.userPoolArn = userPool.userPoolArn
 
@@ -43,16 +43,16 @@ export class BeanTinsCredentials extends Stack {
 
     this.userServer.userPoolResourceServerId
 
-    const memberClient = this.buildUserPoolClient("Member", userPool, props.stageName, props.storeTypeForSettings, memberScope)
+    const memberClient = this.buildUserPoolClient("Member", userPool, props.deploymentName, props.storeTypeForSettings, memberScope)
     this.userPoolMemberClientId = memberClient.userPoolClientId
 
-    const adminClient = this.buildUserPoolClient("Admin", userPool, props.stageName, props.storeTypeForSettings, adminScope)
+    const adminClient = this.buildUserPoolClient("Admin", userPool, props.deploymentName, props.storeTypeForSettings, adminScope)
     this.userPoolAdminClientId = adminClient.userPoolClientId
 
   }
 
-  private buildUserPool(id: string, stageName: string, storeType: StoreType) {
-    const userPool = new UserPool(this, "BeanTinsCredentials" + stageName, {
+  private buildUserPool(id: string, deploymentName: string, storeType: StoreType) {
+    const userPool = new UserPool(this, deploymentName + "Credentials", {
       selfSignUpEnabled: true,
       // signInAliases: {
       //   email: true,
@@ -72,13 +72,13 @@ export class BeanTinsCredentials extends Stack {
       removalPolicy: RemovalPolicy.DESTROY,
     })
 
-    this.storeSetting("UserPoolId" + stageName, 
-                        "the member credentials Id for stage environment " + stageName,
-                        userPool.userPoolId,
-                        storeType)
+    this.storeSetting(deploymentName + "UserPoolId", 
+                      "the member credentials Id for deployment " + deploymentName,
+                       userPool.userPoolId,
+                       storeType)
 
-    this.storeSetting("UserPoolArn" + stageName, 
-                        "the member credentials Arn for stage environment " + stageName,
+    this.storeSetting(deploymentName + "UserPoolArn", 
+                      "the member credentials Arn for deployment " + deploymentName,
                         userPool.userPoolArn,
                         storeType)
 
@@ -112,7 +112,7 @@ export class BeanTinsCredentials extends Stack {
     })
   }
 
-  private buildUserPoolClient(name: string, userPool: UserPool, stageName: string, storeType: StoreType, scope: ResourceServerScope) {
+  private buildUserPoolClient(name: string, userPool: UserPool, deploymentName: string, storeType: StoreType, scope: ResourceServerScope) {
     const standardCognitoAttributes = {
       email: true,
       emailVerified: true,
@@ -147,13 +147,13 @@ export class BeanTinsCredentials extends Stack {
       writeAttributes: clientWriteAttributes,
     })
   
-    this.storeSetting("UserPool" + name + "ClientId" + stageName, 
-                      "the " + name + " credentials client Id for stage environment " + stageName,
+    this.storeSetting(deploymentName + "UserPool" + name + "ClientId", 
+                      "the " + name + " credentials client Id for deployment " + deploymentName,
                       userPoolClient.userPoolClientId,
                       storeType)
 
-                      this.storeSetting("UserPool" + name + "ClientScope" + stageName, 
-                      "the " + name + " client scope for oauth for stage environment " + stageName,
+                      this.storeSetting(deploymentName + "UserPool" + name + "ClientScope", 
+                      "the " + name + " client scope for oauth for deployment" + deploymentName,
                       this.userServer.userPoolResourceServerId + "/" + scope.scopeName,
                       storeType)
 
